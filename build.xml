@@ -1,15 +1,34 @@
-<?xml version="1.0" encoding="UTF-7"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<projet name="compilation_de_tetris" default="compile">
+<project name="compilation_de_tetris" default="compile" basedir=".">
 
   <target name="clean">
     <echo message="Suppression des fichiers issus de la compilation" />
+     <!-- delete rep bin -->
+    <delete dir="bin" />
+    <delete file="Tetris.jar" />
+  	
   </target>
   
   <target name="compile">
+  	<echo message="Compilation" />
+  	<!--on doit créer bin-->
+  	<mkdir dir="bin" />
+  	<javac srcdir="src" destdir="bin" executable="${JAVA_HOME}">
+  		<classpath>
+  			<pathelement location="lib/commons-lang3-3.5.jar" />
+  	    </classpath>
+  	</javac>
   </target>
 
-  <target name="dist">
+  <target name="dist" depends="clean,compile">
+  	<echo message="Target dist" />
+  	<jar destfile="Tetris.jar" basedir="bin">
+  		<!--manifest>
+  			<attribute name="Main-Class" value="com.example.MainClass" />
+  	    </manifest-->
+  	</jar>
   </target>
 
-</projet>
+</project>
+
