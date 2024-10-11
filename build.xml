@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-7"?>
+
+<projet name="compilation_de_tetris" default="compile">
+
+  <target name="clean">
+    <echo message="Suppression des fichiers issus de la compilation" />
+  </target>
+  
+  <target name="compile">
+  </target>
+
+  <target name="dist">
+  </target>
+
+</projet>
