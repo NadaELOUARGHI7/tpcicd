@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="compilation_de_tetris" default="dist" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="compilation_de_tetris" default="dist" basedir=".">
+    
+    <target name="retrieve">
+        <ivy:settings/>
+        <ivy:resolve/>
+    	<ivy:retrieve sync="true" type="jar"/>
+    </target>
+    
 	
 	<!--définition les paramétres -->
 	<property name="src.dir" location="src"/>
@@ -16,9 +23,12 @@
      <!-- supprimer rep bin et l'ancien jar-->
     <delete dir="${obj.dir}" />
   	<delete file="Tetris.jar"/>
+  	<delete dir="${libs.dir}" />
+  	<mkdir dir="${libs.dir}" />
+
   </target>
   
-	<target name="compile" >
+	<target name="compile" depends="retrieve">
 	    <echo message="Compilation du projet Tetris..." />
 	    
 	    <mkdir dir="${obj.dir}" />
