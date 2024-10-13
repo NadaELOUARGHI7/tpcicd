@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="compilation_de_tetris" default="compile" basedir=".">
+<project name="compilation_de_tetris" default="dist" basedir=".">
 	
 	<!--définition les paramétres -->
 	<property name="src.dir" location="src"/>
 	<property name="obj.dir" location="bin"/>
-	<property name="libs.dir" location="libs"/>
+	<property name="libs.dir" location="lib"/>
 	<property name="main-class" value="fr.ubo.tetris.Tetris"/>
 	<property name="compile.classpath" value="${libs.dir}/commons-lang3-3.5.jar"/>
-	<property name="version" value="1.1.0"/>
+	<property name="version" value="1.0.0"/>
 
 	
   <target name="clean">
-    <echo message="Suppression des fichiers issus de la compilation" />
+    <echo message="Suppression..." />
      <!-- supprimer rep bin et l'ancien jar-->
-    <delete dir="bin" />
+    <delete dir="${obj.dir}" />
   	<delete file="Tetris.jar"/>
   </target>
   
 	<target name="compile" >
 	    <echo message="Compilation du projet Tetris..." />
 	    
-	    <mkdir dir="bin" />
+	    <mkdir dir="${obj.dir}" />
 		
 		<!-- spécifie ver 17 à cause des problèmes d'incompatibilité de ver -->
-	    <javac srcdir="src" destdir="bin" executable="$JAVA_HOME" source="17" target="17">
+	    <javac srcdir="${src.dir}" destdir="${obj.dir}" executable="$JAVA_HOME" source="17" target="17">
 	      <classpath>
-	        <pathelement location="lib/commons-lang3-3.5.jar" />
+	        <pathelement location="${compile.classpath}" />
 	      </classpath>
 	    </javac>
 	  </target>
 
 	 <target name="dist" depends="clean,compile">
-	  	<echo message="Target dist" />
+	  	<echo message="Création d'un jar exécutable... " />
 		
-	  	<jar destfile="Tetris.jar" basedir="bin">
+	  	<jar destfile="Tetris.jar" basedir="${obj.dir}">
 	  		<manifest>
 	  			<attribute name="Built-by" value="Nada EL OUARGHI" />
-	  			<attribute name="Implementation-version" value="1.0.0" />
-	  			<attribute name="Main-Class" value="fr.ubo.tetris.Tetris" />
-	  	        <attribute name="Class-Path" value="lib/commons-lang3-3.5.jar" />
+	  			<attribute name="Implementation-version" value="${version}"/>
+	  			<attribute name="Main-Class" value="${main-class}" />
+	  	        <attribute name="Class-Path" value="${compile.classpath}" />
 	  		</manifest>
 	  	</jar>
 	  </target>
