@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="compilation_de_tetris" default="compile" basedir=".">
+	
+	<!--définition les paramétres -->
+	<property name="src.dir" location="src"/>
+	<property name="obj.dir" location="bin"/>
+	<property name="libs.dir" location="libs"/>
+	<property name="main-class" value="fr.ubo.tetris.Tetris"/>
+	<property name="compile.classpath" value="${libs.dir}/commons-lang3-3.5.jar"/>
+	<property name="version" value="1.1.0"/>
 
+	
   <target name="clean">
     <echo message="Suppression des fichiers issus de la compilation" />
-     <!-- supprimer rep bin -->
+     <!-- supprimer rep bin et l'ancien jar-->
     <delete dir="bin" />
   	<delete file="Tetris.jar"/>
   </target>
@@ -22,11 +31,13 @@
 	    </javac>
 	  </target>
 
-	<target name="dist" depends="clean,compile">
+	 <target name="dist" depends="clean,compile">
 	  	<echo message="Target dist" />
 		
 	  	<jar destfile="Tetris.jar" basedir="bin">
 	  		<manifest>
+	  			<attribute name="Built-by" value="Nada EL OUARGHI" />
+	  			<attribute name="Implementation-version" value="1.0.0" />
 	  			<attribute name="Main-Class" value="fr.ubo.tetris.Tetris" />
 	  	        <attribute name="Class-Path" value="lib/commons-lang3-3.5.jar" />
 	  		</manifest>
