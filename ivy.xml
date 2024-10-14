@@ -5,7 +5,7 @@
 <info organisation="fr.ubo" module="compilation_de_tetris" status="integration"/>
 
 <dependencies>
-<dependency org="commons-lang" name="commons-lang3" rev="3-3.5" />
+<dependency org="org.apache.commons" name="commons-lang3" rev="3.5" />
 </dependencies>
 
 </ivy-module>
