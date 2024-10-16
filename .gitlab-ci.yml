@@ -1,7 +1,5 @@
 build:
   stage: build
-  tags:
-    - runner dosi
   image: docker:24.0.2
   services:
     - docker:24.0.2-dind
