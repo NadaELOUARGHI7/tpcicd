@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/1296032927779393627WtGHM_sTkuwEQgEKqSbrZ6cp9lsvvS5QeygXwozXRIpbPZxwtbDnlCaSPw6a69P3XiX4
+ENV DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/1296208255651151952/1VEEXT2Z9dlUSXF-EnBBYErW_1ZuQn86hVW6N3myhCI0OLTuVYDmveqdRk3XAUlmrTo4
 ENV JAVA_VERSION=17
 ENV JAVA_HOME=/usr/lib/jvm/java-$JAVA_VERSION-openjdk-amd64
 
@@ -15,7 +15,16 @@ WORKDIR /app
 COPY . .
 
 RUN ant -lib dependencies compile
-RUN ant -lib dependencies dist
 RUN ant -lib dependencies test
 
-RUN ls -la /app
+
+RUN if [ $? -eq 0 ]; then \
+        curl -H "Content-Type: application/json" -X POST -d "{\"content\": \"Tests passed successfully.\"}" $DISCORD_WEBHOOK_URL; \
+    else \
+        curl -H "Content-Type: application/json" -X POST -d "{\"content\": \"Tests failed. Check the logs.\"}" $DISCORD_WEBHOOK_URL; \
+        cat test-reports/test.log | curl -F 'file=@-;filename=test.log' $DISCORD_WEBHOOK_URL; \
+    fi
+
+RUN curl -H "Content-Type: application/json" -X POST -d "{\"content\": \"Pipeline finished with status: $?\"}" $DISCORD_WEBHOOK_URL
+
+CMD ["tail", "-f", "/dev/null"]
