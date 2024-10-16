@@ -1,6 +1,6 @@
 stages:
   - build
-  -run
+  - run
 
 # Job pour construire l'image Docker
 build:
