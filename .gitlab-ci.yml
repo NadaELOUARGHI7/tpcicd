@@ -1,43 +1,15 @@
 stages:
   - build
-  - test
-  - deploy
 
-variables:
-  DOCKER_IMAGE: yw-docker-image
-  REGISTRY: gitlab-depinfo-2024.univ-brest.fr
-  PROJECT_PATH: dosi/pic/wahid_yassir/tp-ci-cd-2
-
-before_script:
-  - docker info
-  - docker rm -f test_container || true
-
+# Job pour construire l'image Docker
 build:
   stage: build
-  script:
-    - docker build -t $DOCKER_IMAGE .
-    - docker run -d --name test_container $DOCKER_IMAGE
-    - docker exec test_container ls -la /app/dist
-    - docker cp test_container:/app/dist/Tetris.jar Tetris.jar
-
-test:
-  stage: test
-  script:
-    - docker run -d --name test_container $DOCKER_IMAGE
-    - docker cp test_container:/app/dist/Tetris.jar Tetris.jar
-    - docker stop test_container
-    - docker rm test_container
-  artifacts:
-    paths:
-      - Tetris.jar
+  image: docker:24.0.2
+  services:
+    - docker:24.0.2-dind
   tags:
     - dosi
-
-deploy:
-  stage: deploy
   script:
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $REGISTRY
-    - docker tag $DOCKER_IMAGE $REGISTRY/$PROJECT_PATH/$DOCKER_IMAGE:latest
-    - docker push $REGISTRY/$PROJECT_PATH/$DOCKER_IMAGE:latest
-  tags:
-    - dosi
+    - docker build -t registry.gitlab.com/dosi/pic/elouarghi-nada/tetris:$CI_COMMIT_REF_SLUG .
+  only:
+    - branches
