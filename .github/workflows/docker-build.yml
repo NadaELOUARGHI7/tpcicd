@@ -1,0 +1,29 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: nadaelouarghi
+          password: dckr_pat_wDslWroLzj5v6LiSJKn0Wsb1DTY
+
+      - name: Build Docker image
+        run: |
+          docker build -t nadaelouarghi/tpcicd:${{ github.sha }} .
+
+      - name: Push Docker image
+        run: |
+          docker push nadaelouarghi/tpcicd:${{ github.sha }}
+
