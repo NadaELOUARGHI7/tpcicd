@@ -136,7 +136,7 @@
 	  </target>
 
 	 <target name="all" depends="dist,test-reports,javadoc">
-	        <echo message="DONE..."/>
+	        <echo message="DONE."/>
 	  </target>
 	
 </project>
