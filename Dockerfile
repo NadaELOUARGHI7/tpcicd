@@ -2,7 +2,6 @@ FROM ubuntu:latest
 
 ENV NONINTERACTIVE_FRONTEND=noninteractive
 ENV DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/1296208255651151952/1VEEXT2Z9dlUSXF-EnBBYErW_1ZuQn86hVW6N3myhCI0OLTuVYDmveqdRk3XAUlmrTo4
-ENV JDK_VERSION=11
 ENV JDK_HOME=/usr/lib/jvm/java-$JDK_VERSION-openjdk-amd64
 
 RUN apt-get update -qq && \
