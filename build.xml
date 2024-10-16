@@ -51,7 +51,7 @@
 	    </javac>
 	  </target>
 
-	<target name="compile-test" depends="retrieve">
+	<target name="compile-test" depends="compile">
 		    <mkdir dir="${obj.dir}"/>
 		    <javac srcdir="${test.dir}" destdir="${obj.dir}" executable="${JAVA_HOME}/bin/javac" source="17" target="17">
 		        <classpath>

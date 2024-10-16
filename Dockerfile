@@ -13,4 +13,6 @@ WORKDIR /project
 
 COPY . .
 
-RUN ant -lib dependencies all
+RUN ant -lib dependencies compile
+
+RUN ant -lib dependencies test
