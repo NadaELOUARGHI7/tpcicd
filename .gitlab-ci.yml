@@ -19,8 +19,6 @@ build:
     - docker run -d --name test_container $DOCKER_IMAGE
     - docker exec test_container ls -la /app/dist
     - docker cp test_container:/app/dist/Tetris.jar Tetris.jar
-  tags:
-    - dosi
 
 test:
   stage: test
