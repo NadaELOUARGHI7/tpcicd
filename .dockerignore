@@ -1,9 +1,0 @@
-# .dockerignore
-*.class
-*.log
-*.tmp
-.git
-.gitignore
-*.jar
-*.war
-
