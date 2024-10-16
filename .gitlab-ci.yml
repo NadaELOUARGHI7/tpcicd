@@ -1,5 +1,7 @@
 build:
   stage: build
+  tags:
+    - runner dosi
   image: docker:24.0.2
   services:
     - docker:24.0.2-dind
@@ -9,3 +11,4 @@ build:
     - docker build -t $CI_REGISTRY_IMAGE/tetris:$CI_COMMIT_REF_SLUG .
   only:
     - branches
+  
