@@ -1,52 +1,11 @@
-stages:
-  - build
-  - test
-  - report
-  - deploy
-
-variables:
-  JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
-  PATH: "$JAVA_HOME/bin:$PATH"
-
-# Cache for dependencies to speed up builds
-cache:
-  key: "$CI_COMMIT_REF_SLUG"
-  paths:
-    - ~/.ivy2/cache
-
-before_script:
-  # Install dependencies (Java and Ant)
-  - apt-get update && apt-get install -y openjdk-17-jdk ant
-
-build_project:
+build:
   stage: build
+  image: docker:24.0.2
+  services:
+    - docker:24.0.2-dind
   script:
-    - echo "Building the project..."
-    - ant clean compile
-
-test_project:
-  stage: test
-  script:
-    - echo "Running tests..."
-    - ant test
-  artifacts:
-    paths:
-      - bin/test-results
-
-generate_reports:
-  stage: report
-  script:
-    - echo "Generating test reports..."
-    - ant test-reports
-  artifacts:
-    paths:
-      - test-reports
-
-deploy_jar:
-  stage: deploy
-  script:
-    - echo "Building executable JAR..."
-    - ant dist
-  artifacts:
-    paths:
-      - Tetris.jar
+    # Authentification si nécessaire (décommenter si tu pushes vers un registre privé)
+    # - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE/tetris:$CI_COMMIT_REF_SLUG .
+  only:
+    - branches
