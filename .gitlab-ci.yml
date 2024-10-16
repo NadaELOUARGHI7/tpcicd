@@ -11,8 +11,7 @@ build:
   tags:
     - dosi
   script:
-    # Authentification si nécessaire (décommenter si vous poussez vers un registre privé)
-    # - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker info
     - docker build -t registry.gitlab.com/dosi/pic/elouarghi-nada/tetris:$CI_COMMIT_REF_SLUG .
   only:
     - branches
@@ -26,8 +25,6 @@ run:
   tags:
     - dosi
   script:
-    # Authentification si nécessaire (si vous tirez l'image du registre privé)
-    # - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker pull registry.gitlab.com/dosi/pic/elouarghi-nada/tetris:$CI_COMMIT_REF_SLUG
     - docker run -d registry.gitlab.com/dosi/pic/elouarghi-nada/tetris:$CI_COMMIT_REF_SLUG
   only:
